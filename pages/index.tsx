@@ -16,11 +16,11 @@ export default function Home({ file }) {
   usePlugin(form);
 
   useGithubToolbarPlugins()
-  
+
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>{data.title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
