@@ -1,13 +1,23 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import { getGithubPreviewProps, parseJson } from 'next-tinacms-github'
-import { GetStaticProps } from 'next'
-
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
+import { getGithubPreviewProps, parseJson } from "next-tinacms-github";
+import { GetStaticProps } from "next";
+import { usePlugin } from "tinacms";
+import { useGithubJsonForm, useGithubToolbarPlugins } from "react-tinacms-github";
 
 export default function Home({ file }) {
-const data = file.data
+  const formOptions = {
+    label: "Home Page",
+    fields: [{ name: "title", component: "text" }],
+  };
 
-return (
+  // Registers a JSON Tina Form
+  const [data, form] = useGithubJsonForm(file, formOptions);
+  usePlugin(form);
+
+  useGithubToolbarPlugins()
+  
+  return (
     <div className={styles.container}>
       <Head>
         <title>Create Next App</title>
@@ -15,12 +25,10 @@ return (
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          {data.title}
-        </h1>
+        <h1 className={styles.title}>{data.title}</h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
+          Get started by editing{" "}
           <code className={styles.code}>pages/index.js</code>
         </p>
 
@@ -29,12 +37,10 @@ return (
             <h3>Documentation &rarr;</h3>
             <p>Find in-depth information about Next.js features and API.</p>
           </a>
-
           <a href="https://nextjs.org/learn" className={styles.card}>
             <h3>Learn &rarr;</h3>
             <p>Learn about Next.js in an interactive course with quizzes!</p>
           </a>
-
           <a
             href="https://github.com/vercel/next.js/tree/master/examples"
             className={styles.card}
@@ -42,7 +48,6 @@ return (
             <h3>Examples &rarr;</h3>
             <p>Discover and deploy boilerplate example Next.js projects.</p>
           </a>
-
           <a
             href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
             className={styles.card}
@@ -51,7 +56,8 @@ return (
             <p>
               Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
-          </a>s
+          </a>
+          s
         </div>
       </main>
 
@@ -59,30 +65,29 @@ return (
         <p>Footer</p>
       </footer>
     </div>
-  )
+  );
 }
 
-
-export const getStaticProps: GetStaticProps = async function({
-   preview,
-   previewData,
-  }) {
-   if (preview) {
-     return getGithubPreviewProps({
-       ...previewData,
-       fileRelativePath: 'content/home.json',
-       parse: parseJson,
-     })
-   }
-   return {
-     props: {
-       sourceProvider: null,
-       error: null,
-       preview: false,
-       file: {
-         fileRelativePath: 'content/home.json',
-         data: (await import('../content/home.json')).default,
-       },
-     },
-   }
+export const getStaticProps: GetStaticProps = async function ({
+  preview,
+  previewData,
+}) {
+  if (preview) {
+    return getGithubPreviewProps({
+      ...previewData,
+      fileRelativePath: "content/home.json",
+      parse: parseJson,
+    });
   }
+  return {
+    props: {
+      sourceProvider: null,
+      error: null,
+      preview: false,
+      file: {
+        fileRelativePath: "content/home.json",
+        data: (await import("../content/home.json")).default,
+      },
+    },
+  };
+};
