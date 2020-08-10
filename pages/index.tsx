@@ -20,7 +20,7 @@ export default function Home({ file }) {
     label: "Home Page",
     fields: [
       { name: "title", component: "text" },
-      { name: "description", component: "textarea" },
+      { name: "description", component: "editor" },
     ],
   };
 
@@ -43,7 +43,7 @@ export default function Home({ file }) {
           </h1>
 
           <InlineWysiwyg name="description" format="html">
-            <ReactMarkdown source={data.description} />
+            <ReactMarkdown source={data.description} escapeHtml={false} />
           </InlineWysiwyg>
         </main>
       </InlineForm>
