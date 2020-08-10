@@ -28,7 +28,7 @@ export default function Home({ file }) {
         <h1 className={styles.title}>{data.title}</h1>
 
         <p className={styles.description}>
-          Get started by editing{" "}
+          Get started by fandangoing{" "}
           <code className={styles.code}>pages/index.js</code>
         </p>
 
