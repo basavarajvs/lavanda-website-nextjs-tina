@@ -7,16 +7,21 @@ import {
   useGithubJsonForm,
   useGithubToolbarPlugins,
 } from "react-tinacms-github";
-import { InlineForm, InlineTextField, InlineTextarea } from 'react-tinacms-inline'
+import {
+  InlineForm,
+  InlineTextField,
+  InlineTextarea,
+} from "react-tinacms-inline";
+import { InlineWysiwyg } from "react-tinacms-editor";
+import ReactMarkdown from "react-markdown";
 
 export default function Home({ file }) {
   const formOptions = {
     label: "Home Page",
     fields: [
-      { name: "title", component: "text" }, 
-      { name: "description", component: "textarea" }, 
-
-  ],
+      { name: "title", component: "text" },
+      { name: "description", component: "textarea" },
+    ],
   };
 
   // Registers a JSON Tina Form
@@ -37,9 +42,9 @@ export default function Home({ file }) {
             <InlineTextField name="title" />
           </h1>
 
-          <p className={styles.description}>
-            <InlineTextarea name="description" />
-          </p>
+          <InlineWysiwyg name="description" format="html">
+            <ReactMarkdown source={data.description} />
+          </InlineWysiwyg>
         </main>
       </InlineForm>
       <footer className={styles.footer}>
